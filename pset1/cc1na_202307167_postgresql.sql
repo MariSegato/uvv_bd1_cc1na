@@ -274,7 +274,6 @@ ALTER TABLE lojas.produtos ADD CONSTRAINT cc_produtos_produto_id CHECK (lojas.pr
 ALTER TABLE lojas.produtos ADD CONSTRAINT cc_produtos_preco_unitario CHECK (lojas.produtos.preco_unitario >=0);
 --Criar restricao para o atributo "nome_ultima_atualizacao"
 
-
 --RELACAO LOJAS
 --Criar restricao para o atributo "loja_id"
 ALTER TABLE lojas.lojas ADD CONSTRAINT cc_lojas_loja_id CHECK (lojas.lojas.loja_id>0);
@@ -282,7 +281,8 @@ ALTER TABLE lojas.lojas ADD CONSTRAINT cc_lojas_loja_id CHECK (lojas.lojas.loja_
 ALTER TABLE lojas.lojas ADD CONSTRAINT cc_lojas_latitude CHECK (lojas.lojas.latitude>=-90 AND lojas.lojas.latitude<=90);
 --Criar restricao para o atributo "longitude"
 ALTER TABLE lojas.lojas ADD CONSTRAINT cc_lojas_longitude CHECK (lojas.lojas.longitude>=-180 AND lojas.lojas.longitude<=180);
-
+--Criar restricao para "endereco_web" e "endereco_fisico"
+ALTER TABLE lojas.lojas ADD CONSTRAINT cc_lojas_endereco_preenchido CHECK (lojas.lojas.endereco_web IS NOT NULL OR lojas.lojas.endereco_fisico IS NOT NULL);
 
 --RELACAO ESTOQUES
 --Criar restricao para o atributo "estoque_id"
@@ -315,6 +315,8 @@ ALTER TABLE lojas.pedidos ADD CONSTRAINT cc_pedidos_pedido_id CHECK (lojas.pedid
 ALTER TABLE lojas.pedidos ADD CONSTRAINT cc_pedidos_cliente_id CHECK (lojas.pedidos.cliente_id>0);
 --Criar restricao para o atributo "loja_id"
 ALTER TABLE lojas.pedidos ADD CONSTRAINT cc_pedidos_loja_id CHECK (lojas.pedidos.loja_id>0);
+--Criar restricao para o status
+ALTER TABLE lojas.pedidos ADD CONSTRAINT cc_pedidos_status CHECK (lojas.pedidos.status IN ('CANCELADO', 'COMPLETO', 'ABERTO', 'PAGO', 'REEMBOLSADO', 'ENVIADO'));
 
 --RELACAO ENVIOS
 --Criar restricao para o atributo "envio_id"
@@ -323,6 +325,8 @@ ALTER TABLE lojas.envios ADD CONSTRAINT cc_envios_envio_id CHECK (lojas.envios.e
 ALTER TABLE lojas.envios ADD CONSTRAINT cc_envios_loja_id CHECK (lojas.envios.loja_id>0);
 --Criar restricao para o atributo "cliente_id"
 ALTER TABLE lojas.envios ADD CONSTRAINT cc_envios_cliente_id CHECK (lojas.envios.cliente_id>0);
+--Criar restricao para o status
+ALTER TABLE lojas.envios ADD CONSTRAINT cc_envios_status CHECK (lojas.envios.status IN ('CRIADO', 'ENVIADO', 'TRANSITO', 'ENTREGUE'));
 
 --RELACAO PEDIDOS_ITENS
 --Criar restricao para o atributo "pedido_id"
