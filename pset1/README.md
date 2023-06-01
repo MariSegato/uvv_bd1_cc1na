@@ -15,8 +15,10 @@ O projeto foi implementado no SGBD **Postgres** com o auxílio do **DBeaver**.
 
 Os arquivos do repositório "pset1" são:
 
-- **cc1na_202307167_postgresql.architect**
-- **cc1na_202307167_postgresql.pdf**
-- **cc1na_202307167_postgresql.sql**
+- **cc1na_202307167_postgresql.architect**: Diagrama relacional reproduzido no **SQL Power Architect**.
+- **cc1na_202307167_postgresql.pdf**: Diagrama relacional a ser implementado.
+- **cc1na_202307167_postgresql.sql**: script para o PostgreSQL.
+
+---
 
 Meu nome é **Mariana** e neste momento estou cursando Ciência da Computação. Também sou engenheira civil formada pela Universidade de São Paulo (USP).
