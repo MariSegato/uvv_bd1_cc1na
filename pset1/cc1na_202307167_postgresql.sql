@@ -1,5 +1,4 @@
-
-
+--Revogar privilegios do usuario mariana do esquema lojas se ambos existirem
 DO $$BEGIN
     IF EXISTS (
         SELECT 1 FROM pg_roles WHERE rolname = 'mariana'
@@ -32,7 +31,7 @@ WITH OWNER = mariana
 --Comentar BD
 COMMENT ON DATABASE uvv IS 'Banco de dados "UVV" da atividade "PSET1" da disciplina "Design e Desenvolvimento de Banco de Dados1".';
 
---AJUSTAR SEARCH PATH
+--Ajustar search path
 \set db_user mariana;
 \set db_name uvv;
 
