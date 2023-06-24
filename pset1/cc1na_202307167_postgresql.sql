@@ -1,4 +1,4 @@
---Revogar privilegios do usuario mariana do esquema lojas se ambos existirem
+--Revogar privilegios do usuario mariana do schema lojas se ambos existirem
 DO $$BEGIN
     IF EXISTS (
         SELECT 1 FROM pg_roles WHERE rolname = 'mariana'
@@ -8,9 +8,9 @@ DO $$BEGIN
         REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA lojas FROM mariana;
     END IF;
 END$$;
---Deletar tabelas se existir - necessario para apagar relacoes e constraints
+--Deletar tabelas se existirem - necessario para apagar tabelas e constraints
 DROP TABLE IF EXISTS lojas.clientes, lojas.pedidos, lojas.lojas, lojas.produtos, lojas.envios, lojas.estoques, lojas.pedidos_itens;
---Deletar schema se existir- necessario senao schema nao sera apagado
+--Deletar schema se existir - necessario senao schema nao sera apagado
 DROP SCHEMA IF EXISTS lojas;
 --Deletar BD se existir
 DROP DATABASE IF EXISTS uvv;
@@ -59,9 +59,9 @@ CREATE TABLE lojas.produtos (
                 CONSTRAINT produtos_pk PRIMARY KEY (produto_id)
 );
 
---Comentar tabela/relação "produtos"
+--Comentar tabela "produtos"
 COMMENT ON TABLE lojas.produtos IS 'Tabela de produtos';
---Comentar colunas/atributos da tabela "produtos"
+--Comentar colunas da tabela "produtos"
 COMMENT ON COLUMN lojas.produtos.produto_id IS 'Coluna do id do produto';
 COMMENT ON COLUMN lojas.produtos.nome IS 'Coluna do nome do produto';
 COMMENT ON COLUMN lojas.produtos.preco_unitario IS 'Coluna do preco unitario do produto';
@@ -72,7 +72,7 @@ COMMENT ON COLUMN lojas.produtos.imagem_arquivo IS 'Coluna do arquivo no qual es
 COMMENT ON COLUMN lojas.produtos.imagem_charset IS 'Coluna do charset da imagem do produto';
 COMMENT ON COLUMN lojas.produtos.imagem_ultima_atualizacao IS 'Coluna da data da ultima atualizacao da imagem do produto';
 
---Criar tabela/relação "lojas"
+--Criar tabela "lojas"
 CREATE TABLE lojas.lojas (
                 loja_id NUMERIC(38) NOT NULL,
                 nome VARCHAR(255) NOT NULL,
@@ -88,9 +88,9 @@ CREATE TABLE lojas.lojas (
                 CONSTRAINT lojas_pk PRIMARY KEY (loja_id)
 );
 
---Comentar tabela/relação "lojas"
+--Comentar tabela "lojas"
 COMMENT ON TABLE lojas.lojas IS 'Tabela de lojas';
---Comentar colunas/atributos da tabela "lojas"
+--Comentar colunas da tabela "lojas"
 COMMENT ON COLUMN lojas.lojas.loja_id IS 'Coluna do id da loja';
 COMMENT ON COLUMN lojas.lojas.nome IS 'Coluna do nome da loja';
 COMMENT ON COLUMN lojas.lojas.endereco_web IS 'Coluna do endereco na web da loja';
@@ -103,7 +103,7 @@ COMMENT ON COLUMN lojas.lojas.logo_arquivo IS 'Coluna do arquivo no qual a logo 
 COMMENT ON COLUMN lojas.lojas.logo_charset IS 'Coluna do charset da logo';
 COMMENT ON COLUMN lojas.lojas.logo_ultima_atualizacao IS 'Coluna da data da ultima atualizacao da logo';
 
---Criar tabela/relação "estoques"
+--Criar tabela "estoques"
 CREATE TABLE lojas.estoques (
                 estoque_id NUMERIC(38) NOT NULL,
                 loja_id NUMERIC(38) NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE lojas.estoques (
                 quantidade NUMERIC(38) NOT NULL,
                 CONSTRAINT estoques_pk PRIMARY KEY (estoque_id)
 );
---Comentar tabela/relação "estoques"
+--Comentar tabela "estoques"
 COMMENT ON TABLE lojas.estoques IS 'Tabela de estoques de produtos em lojas';
 --Comentar colunas/atributos da tabela "estoques"
 COMMENT ON COLUMN lojas.estoques.estoque_id IS 'Coluna do id do estoque';
@@ -119,7 +119,7 @@ COMMENT ON COLUMN lojas.estoques.loja_id IS 'Coluna da id da loja na qual o esto
 COMMENT ON COLUMN lojas.estoques.produto_id IS 'Coluna da id do produto em que consiste o estoque';
 COMMENT ON COLUMN lojas.estoques.quantidade IS 'Coluna da quantidade de certo produto que ha no estoque';
 
---Criar tabela/relação "clientes"
+--Criar tabela "clientes"
 CREATE TABLE lojas.clientes (
                 cliente_id NUMERIC(38) NOT NULL,
                 email VARCHAR(255) NOT NULL,
@@ -129,9 +129,9 @@ CREATE TABLE lojas.clientes (
                 telefone3 VARCHAR(20),
                 CONSTRAINT clientes_pk PRIMARY KEY (cliente_id)
 );
---Comentar tabela/relação "clientes"
+--Comentar tabela "clientes"
 COMMENT ON TABLE lojas.clientes IS 'Tabela de clientes';
---Comentar colunas/atributos da tabela "clientes"
+--Comentar colunas da tabela "clientes"
 COMMENT ON COLUMN lojas.clientes.cliente_id IS 'Coluna do id do cliente';
 COMMENT ON COLUMN lojas.clientes.email IS 'Coluna do email do cliente';
 COMMENT ON COLUMN lojas.clientes.nome IS 'Coluna do nome do cliente';
@@ -139,7 +139,7 @@ COMMENT ON COLUMN lojas.clientes.telefone1 IS 'Coluna do primeiro telefone do cl
 COMMENT ON COLUMN lojas.clientes.telefone2 IS 'Coluna do segundo telefone do cliente';
 COMMENT ON COLUMN lojas.clientes.telefone3 IS 'Coluna do terceiro telefone do cliente';
 
---Criar tabela/relação "pedidos"
+--Criar tabela "pedidos"
 CREATE TABLE lojas.pedidos (
                 pedido_id NUMERIC(38) NOT NULL,
                 data_hora TIMESTAMP NOT NULL,
@@ -148,16 +148,16 @@ CREATE TABLE lojas.pedidos (
                 loja_id NUMERIC(38) NOT NULL,
                 CONSTRAINT pedidos_pk PRIMARY KEY (pedido_id)
 );
---Comentar tabela/relação "pedidos"
+--Comentar tabela "pedidos"
 COMMENT ON TABLE lojas.pedidos IS 'Tabela de pedidos';
---Comentar colunas/atributos da tabela "pedidos"
+--Comentar colunas da tabela "pedidos"
 COMMENT ON COLUMN lojas.pedidos.pedido_id IS 'Coluna do id do pedido';
 COMMENT ON COLUMN lojas.pedidos.data_hora IS 'Coluna da data e da hora do pedido';
 COMMENT ON COLUMN lojas.pedidos.cliente_id IS 'Coluna do id do cliente que fez o pedido';
 COMMENT ON COLUMN lojas.pedidos.status IS 'Coluna do status do pedido';
 COMMENT ON COLUMN lojas.pedidos.loja_id IS 'Coluna do id da loja que entrega o pedido';
 
---Criar tabela/relação "envios"
+--Criar tabela "envios"
 CREATE TABLE lojas.envios (
                 envio_id NUMERIC(38) NOT NULL,
                 loja_id NUMERIC(38) NOT NULL,
@@ -166,16 +166,16 @@ CREATE TABLE lojas.envios (
                 status VARCHAR(15) NOT NULL,
                 CONSTRAINT envios_pk PRIMARY KEY (envio_id)
 );
---Comentar tabela/relação "envios"
+--Comentar tabela "envios"
 COMMENT ON TABLE lojas.envios IS 'Tabela de envios';
---Comentar colunas/atributos da tabela "envios"
+--Comentar colunas da tabela "envios"
 COMMENT ON COLUMN lojas.envios.envio_id IS 'Coluna do id do envio';
 COMMENT ON COLUMN lojas.envios.loja_id IS 'Coluna do id da loja que realiza o envio';
 COMMENT ON COLUMN lojas.envios.cliente_id IS 'Coluna do id do cliente que recebe o envio';
 COMMENT ON COLUMN lojas.envios.endereco_entrega IS 'Coluna do endereco da entrega do envio';
 COMMENT ON COLUMN lojas.envios.status IS 'Coluna do status do envio';
 
---Criar tabela/relação "pedidos_itens"
+--Criar tabela "pedidos_itens"
 CREATE TABLE lojas.pedidos_itens (
                 pedido_id NUMERIC(38) NOT NULL,
                 produto_id NUMERIC(38) NOT NULL,
@@ -185,9 +185,9 @@ CREATE TABLE lojas.pedidos_itens (
                 envio_id NUMERIC(38) NOT NULL,
                 CONSTRAINT pedidos_itens_pk PRIMARY KEY (pedido_id, produto_id)
 );
---Comentar tabela/relação "pedidos_itens"
+--Comentar tabela "pedidos_itens"
 COMMENT ON TABLE lojas.pedidos_itens IS 'Tabela de itens dos pedidos';
---Comentar colunas/atributos da tabela "pedidos_itens"
+--Comentar colunas da tabela "pedidos_itens"
 COMMENT ON COLUMN lojas.pedidos_itens.pedido_id IS 'Coluna do id do pedido';
 COMMENT ON COLUMN lojas.pedidos_itens.produto_id IS 'Coluna do id do produto do pedido';
 COMMENT ON COLUMN lojas.pedidos_itens.numero_da_linha IS 'Coluna do numero da linha dos itens do pedido';
@@ -267,77 +267,77 @@ NOT DEFERRABLE;
 
 --CRIAR RESTRICOES/CONSTRAINT CHECK
 
---RELACAO PRODUTOS
---Criar restricao para o atributo "produto_id"// ID=0 poderia causar confusao
+--TABELA PRODUTOS
+--Criar restricao para a coluna "produto_id"// ID=0 poderia causar confusao
 ALTER TABLE lojas.produtos ADD CONSTRAINT cc_produtos_produto_id CHECK (lojas.produtos.produto_id >0);
---Criar restricao para o atributo "preco_unitario"
+--Criar restricao para a coluna "preco_unitario"
 ALTER TABLE lojas.produtos ADD CONSTRAINT cc_produtos_preco_unitario CHECK (lojas.produtos.preco_unitario >=0);
---Criar restricao para o atributo "nome_ultima_atualizacao"
+--Criar restricao para a coluna "nome_ultima_atualizacao"
 
---RELACAO LOJAS
---Criar restricao para o atributo "loja_id"
+--TABELA LOJAS
+--Criar restricao para a coluna "loja_id"
 ALTER TABLE lojas.lojas ADD CONSTRAINT cc_lojas_loja_id CHECK (lojas.lojas.loja_id>0);
---Criar restricao para o atributo "latitude"
+--Criar restricao para a coluna "latitude"
 ALTER TABLE lojas.lojas ADD CONSTRAINT cc_lojas_latitude CHECK (lojas.lojas.latitude>=-90 AND lojas.lojas.latitude<=90);
---Criar restricao para o atributo "longitude"
+--Criar restricao para a coluna "longitude"
 ALTER TABLE lojas.lojas ADD CONSTRAINT cc_lojas_longitude CHECK (lojas.lojas.longitude>=-180 AND lojas.lojas.longitude<=180);
 --Criar restricao para "endereco_web" e "endereco_fisico"
 ALTER TABLE lojas.lojas ADD CONSTRAINT cc_lojas_endereco_preenchido CHECK (lojas.lojas.endereco_web IS NOT NULL OR lojas.lojas.endereco_fisico IS NOT NULL);
 
---RELACAO ESTOQUES
---Criar restricao para o atributo "estoque_id"
+--TABELA ESTOQUES
+--Criar restricao para a coluna "estoque_id"
 ALTER TABLE lojas.estoques ADD CONSTRAINT cc_estoques_estoque_id CHECK (lojas.estoques.estoque_id>0);
---Criar restricao para o atributo "loja_id"
+--Criar restricao para a coluna "loja_id"
 ALTER TABLE lojas.estoques ADD CONSTRAINT cc_estoques_loja_id CHECK (lojas.estoques.loja_id>0);
---Criar restricao para o atributo "produto_id"
+--Criar restricao para a coluna "produto_id"
 ALTER TABLE lojas.estoques ADD CONSTRAINT cc_estoques_produto_id CHECK (lojas.estoques.produto_id>0);
---Criar restricao para o atributo "quantidade"
+--Criar restricao para a coluna "quantidade"
 ALTER TABLE lojas.estoques ADD CONSTRAINT cc_estoques_quantidade CHECK (lojas.estoques.quantidade>=0);
 
---RELACAO CLIENTES
---Criar restricao para o atributo "cliente_id" // ID=0 poderia causar confusao
+--TABELA CLIENTES
+--Criar restricao para a coluna "cliente_id" // ID=0 poderia causar confusao
 ALTER TABLE lojas.clientes ADD CONSTRAINT cc_clientes_cliente_id CHECK (lojas.clientes.cliente_id>0);
---Criar restricao para o atributo "email"
+--Criar restricao para a coluna "email"
 ALTER TABLE lojas.clientes ADD CONSTRAINT cc_clientes_email CHECK (lojas.clientes.email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$');
---Criar restricao para o atributo "nome"
+--Criar restricao para a coluna "nome"
 ALTER TABLE lojas.clientes ADD CONSTRAINT cc_clientes_nome CHECK (lojas.clientes.nome ~* '^[A-Za-z\s]+$');
---Criar restricao para o atributo "telefone1"
+--Criar restricao para a coluna "telefone1"
 ALTER TABLE lojas.clientes ADD CONSTRAINT cc_clientes_telefone1 CHECK (lojas.clientes.telefone1 ~* '^\+?[0-9\-\(\)\s]+$');
---Criar restricao para o atributo "telefone1"
+--Criar restricao para a coluna "telefone1"
 ALTER TABLE lojas.clientes ADD CONSTRAINT cc_clientes_telefone2 CHECK (lojas.clientes.telefone2 ~* '^\+?[0-9\-\(\)\s]+$');
---Criar restricao para o atributo "telefone1"
+--Criar restricao para a coluna "telefone1"
 ALTER TABLE lojas.clientes ADD CONSTRAINT cc_clientes_telefone3 CHECK (lojas.clientes.telefone3 ~* '^\+?[0-9\-\(\)\s]+$');
 
---RELACAO PEDIDOS
---Criar restricao para o atributo "pedido_id"
+--TABELA PEDIDOS
+--Criar restricao para a coluna "pedido_id"
 ALTER TABLE lojas.pedidos ADD CONSTRAINT cc_pedidos_pedido_id CHECK (lojas.pedidos.pedido_id>0);
---Criar restricao para o atributo "cliente_id"
+--Criar restricao para a coluna "cliente_id"
 ALTER TABLE lojas.pedidos ADD CONSTRAINT cc_pedidos_cliente_id CHECK (lojas.pedidos.cliente_id>0);
---Criar restricao para o atributo "loja_id"
+--Criar restricao para a coluna "loja_id"
 ALTER TABLE lojas.pedidos ADD CONSTRAINT cc_pedidos_loja_id CHECK (lojas.pedidos.loja_id>0);
---Criar restricao para o status
+--Criar restricao para a coluna "status"
 ALTER TABLE lojas.pedidos ADD CONSTRAINT cc_pedidos_status CHECK (lojas.pedidos.status IN ('CANCELADO', 'COMPLETO', 'ABERTO', 'PAGO', 'REEMBOLSADO', 'ENVIADO'));
 
---RELACAO ENVIOS
---Criar restricao para o atributo "envio_id"
+--TABELA ENVIOS
+--Criar restricao para a coluna "envio_id"
 ALTER TABLE lojas.envios ADD CONSTRAINT cc_envios_envio_id CHECK (lojas.envios.envio_id>0);
---Criar restricao para o atributo "loja_id"
+--Criar restricao para a coluna "loja_id"
 ALTER TABLE lojas.envios ADD CONSTRAINT cc_envios_loja_id CHECK (lojas.envios.loja_id>0);
---Criar restricao para o atributo "cliente_id"
+--Criar restricao para a coluna "cliente_id"
 ALTER TABLE lojas.envios ADD CONSTRAINT cc_envios_cliente_id CHECK (lojas.envios.cliente_id>0);
---Criar restricao para o status
+--Criar restricao para a coluna "status"
 ALTER TABLE lojas.envios ADD CONSTRAINT cc_envios_status CHECK (lojas.envios.status IN ('CRIADO', 'ENVIADO', 'TRANSITO', 'ENTREGUE'));
 
---RELACAO PEDIDOS_ITENS
---Criar restricao para o atributo "pedido_id"
+--TABELA PEDIDOS_ITENS
+--Criar restricao para a coluna "pedido_id"
 ALTER TABLE lojas.pedidos_itens ADD CONSTRAINT cc_pedidos_itens_pedido_id CHECK (lojas.pedidos_itens.pedido_id>0);
---Criar restricao para o atributo "produto_id"
+--Criar restricao para a coluna "produto_id"
 ALTER TABLE lojas.pedidos_itens ADD CONSTRAINT cc_pedidos_itens_produto_id CHECK (lojas.pedidos_itens.produto_id>0);
---Criar restricao para o atributo "numero_da_linha"
+--Criar restricao para a coluna "numero_da_linha"
 ALTER TABLE lojas.pedidos_itens ADD CONSTRAINT cc_pedidos_itens_numero_da_linha CHECK (lojas.pedidos_itens.numero_da_linha>0);
---Criar restricao para o atributo "preco_unitario"
+--Criar restricao para a coluna "preco_unitario"
 ALTER TABLE lojas.pedidos_itens ADD CONSTRAINT cc_pedidos_itens_preco_unitario CHECK (lojas.pedidos_itens.preco_unitario>=0);
---Criar restricao para o atributo "quantidade"
+--Criar restricao para a coluna "quantidade"
 ALTER TABLE lojas.pedidos_itens ADD CONSTRAINT cc_pedidos_itens_quantidade CHECK (lojas.pedidos_itens.quantidade>=0);
---Criar restricao para o atributo "envio_id"
+--Criar restricao para a coluna "envio_id"
 ALTER TABLE lojas.pedidos_itens ADD CONSTRAINT cc_pedidos_itens_envio_id CHECK (lojas.pedidos_itens.envio_id>0);
